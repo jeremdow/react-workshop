@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy } from 'react'
+import React, { useState, useEffect } from 'react'
 import ProductFilters from 'YesterTech/ProductFilters'
 
 function ProductsSidebar() {
@@ -18,8 +18,6 @@ function ProductsSidebar() {
 
     return () => media.removeListener(listener)
   }, [query])
-
-  console.log(isWide)
 
   return (
     isWide && (
