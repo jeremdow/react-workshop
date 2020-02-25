@@ -30,8 +30,37 @@ const products = [
   }
 ]
 
+function StarRating({ rating }) {
+  let stars = []
+  for (let i = 0; i < 5; i++) {
+    if (i + 1 <= rating) stars.push(<FaStar key={i} />)
+    else if (i < rating) stars.push(<FaStarHalfAlt key={i} />)
+    else stars.push(<FaRegStar key={i} />)
+  }
+  return <span className={'star-ratings'}>{stars}</span>
+}
+
+function Product({ product }) {
+  return (
+    <div>
+      <Heading>{product.name}</Heading>
+      <StarRating rating={product.rating} />
+      <div className="text-small">
+        <div>Brand: {product.brand}</div>
+        <div>Condition: {product.condition}</div>
+      </div>
+    </div>
+  )
+}
+
 function BrowseProducts() {
-  return <div>{/* Exercise code goes here! */}</div>
+  return (
+    <div>
+      {products.map(product => {
+        return <Product product={product} key={product.id} />
+      })}
+    </div>
+  )
 }
 
 ReactDOM.render(<BrowseProducts />, document.getElementById('root'))
