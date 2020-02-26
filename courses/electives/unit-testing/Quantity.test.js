@@ -105,7 +105,7 @@ describe('Quantity', () => {
         new MouseEvent('click', { bubbles: true })
       )
     })
-    expect(input.value).toBe('0')
+    expect(input.value).toBe('1')
   })
 
   it('should add', () => {

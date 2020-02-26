@@ -10,7 +10,7 @@ import ShoppingCartButton from 'YesterTech/ShoppingCartButton'
 import { useShoppingCart } from 'YesterTech/ShoppingCartState'
 import 'YesterTech/BrowseProductItem.scss'
 
-function BrowseProductItem({
+const BrowseProductItem = React.memo(function BrowseProductItem({
   productId,
   name,
   price,
@@ -57,6 +57,6 @@ function BrowseProductItem({
       </Column>
     </Columns>
   )
-}
+})
 
 export default BrowseProductItem
