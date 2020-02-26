@@ -21,13 +21,25 @@ function Checkout() {
   const match = useRouteMatch()
   const history = useHistory()
 
-  const [sameAsBilling, setSameAsBilling] = useState(false)
-  const [fields, setFields] = useState(false)
+  const [state, dispatch] = useReducer(
+    (state, action) => {
+      switch (action.type) {
+        case 'SUBMIT_BILLING': {
+          const { sameAsBilling, fields } = action
+          return { ...state, sameAsBilling, fields }
+        }
+        default:
+          return state
+      }
+    },
+    {
+      sameAsBilling: false,
+      fields: {}
+    }
+  )
 
   function handleBillingSubmit(sameAsBilling, fields) {
-    setSameAsBilling(sameAsBilling)
-    setFields(fields)
-    console.log(sameAsBilling, fields)
+    dispatch({ type: 'SUBMIT_BILLING', sameAsBilling, fields })
     history.push(`${match.path}/review`)
   }
 
@@ -45,12 +57,12 @@ function Checkout() {
           Hint: We shouldn't be able to visit this route unless we have
           values inside of our state for `fields`. See the README
         */}
-        {fields && (
+        {state.fields && (
           <Route path={`${match.path}/review`}>
             {/* The README also tells you what props you need to pass into CheckoutReview */}
             <CheckoutReview
-              sameAsBilling={sameAsBilling}
-              fields={fields}
+              sameAsBilling={state.sameAsBilling}
+              fields={state.fields}
             />
           </Route>
         )}
