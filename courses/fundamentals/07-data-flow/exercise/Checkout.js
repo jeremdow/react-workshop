@@ -50,7 +50,11 @@ function Checkout() {
           <ViewCart />
         </Route>
         <Route path={`${match.path}/billing`}>
-          <CheckoutBilling onSubmit={handleBillingSubmit} />
+          <CheckoutBilling
+            onSubmit={handleBillingSubmit}
+            defaultSameAsBilling={state.sameAsBilling}
+            defaultFields={state.fields}
+          />
         </Route>
 
         {/*
