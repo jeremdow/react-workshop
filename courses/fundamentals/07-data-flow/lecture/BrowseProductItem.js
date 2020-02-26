@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Quantity from './Quantity'
-// import { useShoppingCart } from './ShoppingCartState'
+//import { useShoppingCart } from './ShoppingCartState'
 import ProductImage from 'YesterTech/ProductImage'
 
 function BrowseProductItem({ productId, name, price, imagePath }) {
