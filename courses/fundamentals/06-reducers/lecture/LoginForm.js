@@ -6,16 +6,70 @@ import Notice from 'YesterTech/Notice'
 import Centered from 'YesterTech/Centered'
 import api from 'YesterTech/api'
 
+let initialState = {
+  count: 0,
+  user: {},
+}
+let actions = [{ type: 'ADD', by: 2 }, { type: 'MINUS', by: 4 }]
+function reducer(state, action) {
+  if (action.type === 'ADD') {
+  }
+}
+
+let array = [1, 2, 3, 4, 5]
+let add = (x, y) => x + y
+console.log(array.reduce(add))
+
+// 1 + 0 = 1
+// 1 + 2 = 3
+// 3 + 3 = 6
+// 6 + 4 = 10
+// 10 + 5 = 15
+
+function useReducerWithMiddleware(state, action, middleWare) {}
+
 function LoginForm({ onAuthenticated }) {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
+  const [state, dispatch] = useReducer(
+    (state, action) => {
+      console.log(state)
+      switch (action.type) {
+        case 'LOGGING_IN':
+          return { ...state, loading: true }
+        case 'LOGIN_SUCCESS':
+          return {
+            ...state,
+            user: action.user,
+            loading: false,
+          }
+        case 'LOGIN_ERROR':
+          return {
+            ...state,
+            error: action.error,
+            loading: false,
+          }
+        case 'CHANGE_FIELD':
+          return {
+            ...state,
+            [action.name]: action.value,
+          }
+        default:
+          return state
+      }
+    },
+    {
+      username: '',
+      password: '',
+      error: null,
+      loading: false,
+      showPassword: false,
+      user: null,
+    }
+  )
+  let { username, password, error, loading, showPassword, user } = state
 
   function handleLogin(event) {
     event.preventDefault()
-    setLoading(true)
+    dispatch('LOGGING_IN')
     api.auth
       .login(username, password)
       .then(user => {
@@ -24,9 +78,16 @@ function LoginForm({ onAuthenticated }) {
         }
       })
       .catch(error => {
-        setError(error)
-        setLoading(false)
+        dispatch('ERROR')
       })
+  }
+
+  function changeField(e) {
+    dispatch({
+      type: 'CHANGE_FIELD',
+      name: e.target.name,
+      value: e.target.type !== 'checkbox' ? e.target.value : e.target.checked,
+    })
   }
 
   return (
@@ -42,22 +103,25 @@ function LoginForm({ onAuthenticated }) {
 
         <div className="form-field">
           <input
+            name="username"
             aria-label="Username"
-            onChange={e => setUsername(e.target.value)}
+            onChange={changeField}
             type="text"
             placeholder="Username"
           />
         </div>
         <div className="form-field">
           <input
+            name="password"
             aria-label="Password"
-            onChange={e => setPassword(e.target.value)}
+            onChange={changeField}
             type={showPassword ? 'text' : 'password'}
             placeholder="Password"
           />
           <label>
             <input
-              onChange={() => setShowPassword(!showPassword)}
+              name="showPassword"
+              onChange={changeField}
               defaultChecked={showPassword}
               className="passwordCheckbox"
               type="checkbox"
