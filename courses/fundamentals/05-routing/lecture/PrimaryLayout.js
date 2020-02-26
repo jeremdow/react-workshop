@@ -19,7 +19,7 @@ import ProductSubNav from 'YesterTech/ProductSubNav'
 // After we implement the fake versions of these below, we can swap them out for these real ones:
 // import ProductsSidebar from 'YesterTech/ProductsSidebar'
 // import BrowseProducts from 'YesterTech/BrowseProducts'
-// import ProductProfile from 'YesterTech/ProductProfile'
+import ProductProfile from 'YesterTech/ProductProfile'
 
 export default function PrimaryLayout() {
   return (
@@ -28,8 +28,14 @@ export default function PrimaryLayout() {
         <PrimaryHeader />
         <ProductSubNav />
         <main className="primary-content">
-          <Home />
-          {/* Put other pages here */}
+          <Switch>
+            <Route path="/" exact>
+              <Home />
+            </Route>
+            <Route path="/products">
+              <ProductsLayout />
+            </Route>
+          </Switch>
         </main>
         <footer className="primary-footer spacing">
           <hr />
@@ -80,13 +86,21 @@ function ProductsLayout() {
         </section>
       </aside>
       <div>
-        <BrowseProducts />
+        <Switch>
+          <Route path="/products" exact>
+            <BrowseProducts />
+          </Route>
+          <Route path="/products/:productId">
+            <ProductProfile />
+          </Route>
+        </Switch>
         {/* BrowseProducts is the page being shown, but other pages could go here like ProductProfile */}
       </div>
     </div>
   )
 }
 
+<<<<<<< HEAD
 function ProductProfile() {
   return (
     <div className="spacing">
@@ -112,6 +126,29 @@ function ProductProfile() {
     </div>
   )
 }
+=======
+// function ProductProfile() {
+//   return (
+//     <div className="spacing">
+//       <Columns gutters>
+//         <Column>
+//           <ProductImage src="/images/products/mario-kart.jpg" alt="Mario Kart" size={15} />
+//         </Column>
+//         <Column flex className="spacing">
+//           <Heading>Mario Kart</Heading>
+//           <StarRatings rating={4.5} />
+//           <hr />
+//           <div className="text-small">
+//             <div>Brand: Nintendo</div>
+//             <div>Category: Games</div>
+//             <div>Condition: Good</div>
+//           </div>
+//         </Column>
+//       </Columns>
+//     </div>
+//   )
+// }
+>>>>>>> 05-routing > lecture
 
 function BrowseProducts() {
   return (
