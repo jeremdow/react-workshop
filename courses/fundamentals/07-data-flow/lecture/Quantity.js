@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { FaMinusCircle, FaPlusCircle } from 'react-icons/fa'
 import 'YesterTech/Quantity.scss'
 
-function Quantity() {
-  const [quantity, setQuantity] = useState(0)
+function Quantity({quantity, setQuantity}) {
 
   function subtract() {
     if (quantity > 0) {
