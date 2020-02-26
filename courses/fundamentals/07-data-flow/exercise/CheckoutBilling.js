@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { Columns, Column } from 'react-flex-columns'
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa'
@@ -37,6 +37,10 @@ function CheckoutBilling({
     shippingName,
     shippingAddress
   } = state
+
+  useEffect(() => {
+    localStorage.setItem('checkout-state', JSON.stringify(state))
+  })
 
   function handleSubmit(event) {
     event.preventDefault()
